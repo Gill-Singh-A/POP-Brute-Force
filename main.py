@@ -25,13 +25,17 @@ def get_arguments(*args):
     return parser.parse_args()[0]
 
 port = 995
+use_ssl = True
 ignore_errors = True
 lock = Lock()
 
 def login(pop_server, port, user, password):
     t1 = time()
     try:
-        mailbox = poplib.POP3_SSL(pop_server, port)
+        if use_ssl:
+            mailbox = poplib.POP3_SSL(pop_server, port)
+        else:
+            mailbox = poplib.POP3(pop_server, port)
         mailbox.user(user)
         mailbox.pass_(password)
         mailbox.close()
@@ -82,6 +86,7 @@ def main(server, port, credentials):
 if __name__ == "__main__":
     arguments = get_arguments(('-s', "--server", "server", "Target POP Server"),
                               ('-p', "--port", "port", f"Port of Target POP Server (Default={port})"),
+                              ('-S', "--ssl", "ssl", f"Use SSL for Connection (True/False, Default={use_ssl})"),
                               ('-u', "--users", "users", "Target Users (seperated by ',') or File containing List of Users"),
                               ('-P', "--password", "password", "Passwords (seperated by ',') or File containing List of Passwords"),
                               ('-c', "--credentials", "credentials", "Name of File containing Credentials in format ({user}:{password})"),
@@ -94,6 +99,8 @@ if __name__ == "__main__":
         arguments.port = port
     else:
         arguments.port = int(arguments.port)
+    if arguments.ssl == "False":
+        use_ssl = False
     if not arguments.credentials:
         if not arguments.users:
             display('-', f"Please specify {Back.YELLOW}Target Users{Back.RESET}")
