@@ -1,5 +1,5 @@
 # POP Brute Force
-A Python Program that uses **poplib** module to brute force POP3 (Post Office Protocol) Server that uses SSL Connection for encrypted Data Transfer
+A Python Program that uses **poplib** module to brute force POP3 (Post Office Protocol).
 ## Requirements
 Language Used = Python3<br />
 Modules/Packages used:
