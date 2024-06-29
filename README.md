@@ -13,6 +13,7 @@ Modules/Packages used:
 ## Arguments
 * '-s', "--server" : Target POP Server
 * '-p', "--port" : Port of Target POP Server (Default=995)
+* '-S', "--ssl" : Use SSL for Connection (True/False, Default=True)
 * '-u', "--users" : Target Users (seperated by ',') or File containing List of Users
 * '-P', "--password" : Passwords (seperated by ',') or File containing List of Passwords
 * '-c', "--credentials" : Name of File containing Credentials in format ({user}:{password})
